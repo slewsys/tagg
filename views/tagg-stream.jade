@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1 Twitter Aggregator
+  small Twitter Streaming API via Socket.IO.
+  br
+  .container
+    - each tweet in chorus
+      .tweet= tweet.text

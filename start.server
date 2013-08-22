@@ -1,0 +1,9 @@
+#! /bin/bash
+#
+# @(#) start.server
+#
+# Run cnnbrk_aggregator.
+NODE=/opt/bin/node
+export NODE_PATH=/opt/lib/node_modules:/opt/lib/node_modules/cnnbrk-aggregator/node_modules
+
+env NODE_ENV=development $NODE ./app.js

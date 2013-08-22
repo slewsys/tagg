@@ -1,0 +1,58 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+@media screen and (max-width: 1980px) {
+    .container {
+        -webkit-column-count: 3;
+        display: box;
+        border: 1px solid black;
+        padding: 0em 2em 4em 0em;
+        max-width: 72em;
+        height: 64em;
+    }
+
+    .tweet {
+        /* box-flex: 1; */
+        background-color: lightgrey;
+        width: 18em;
+        height: 12em;
+        margin: 4em 0em 4em 4em;
+        padding: 1em 1em 1em 1em;
+        border: 1px solid black;
+        border-radius: 5px;
+        box-sizing: border-box;
+        /* text-align: justify; */
+        word-wrap: break-word;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .container {
+        -webkit-column-count: 1;
+        display: box;
+        border: 1px solid black;
+        padding: 0em 2em 4em 0em;
+        max-width: 75em;
+        height: 64em;
+    }
+
+    .tweet {
+        /* box-flex: 1; */
+        background-color: lightgrey;
+        padding: 1em 1em 1em 1em;
+        width: 10em;
+        height: 10em;
+        margin: 3em 3em 3em 3em;
+        border: 1px solid black;
+        border-radius: 5px;
+        box-sizing: border-box;
+        /* text-align: justify; */
+        word-wrap: break-word;
+    }
+}
