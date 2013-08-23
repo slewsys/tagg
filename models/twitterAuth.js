@@ -1,6 +1,6 @@
 /*
  * twitterAuth.js: Twitter stream authentication module.
- * 
+ *
  * twitterAuth:
  *     Given Twitter credentials, authenticates stream request;
  *     returns object with broadcast() property.
@@ -18,21 +18,25 @@ var lastBroadcastTime = new Date ();
 
 function tweetClient (tweet, id)
 {
-    clientList[id].emit('solo', tweet);
+    if (clientList[id]['disconnected'])
+        delete clientList[id];
+    else
+        clientList[id].emit('solo', tweet);
 }
 
 function broadcastTweet (tweet)
 {
     var clients = 0;
     var currentTime = new Date ();
-    var broadcastDelay = 0;
+    var broadcastDelay;
 
     // Ignore corrupted tweets.
     if (tweet.text === undefined)
         return;
-    
+
     // Ignore if text in streamData[].
-    for (i = 0; i < streamData.length; ++i)
+    for (var i = 0; i < streamData.length; ++i)
+
     {
         if (tweet.text === streamData[i].text)
             return;
@@ -47,27 +51,23 @@ function broadcastTweet (tweet)
 
     // Throttle transmission to 1 second per tweet (per client).
     if (currentTime - lastBroadcastTime < 1000)
-        {
-            // Increment lastBroadcastTime by 1 second.
-            lastBroadcastTime.setSeconds(lastBroadcastTime.getSeconds() + 1);
-            broadcastDelay = lastBroadcastTime - currentTime;
-        }
+    {
+        lastBroadcastTime.setSeconds(lastBroadcastTime.getSeconds() + 1);
+    }
     else
+    {
         lastBroadcastTime = currentTime;
+    }
+    broadcastDelay = lastBroadcastTime - currentTime;
 
     // Broadcast to clientList.
     for (var id in clientList)
     {
-        if (clientList[id]['disconnected'])
-            delete clientList[id];
-        else
-        {
-            setTimeout (tweetClient, broadcastDelay, tweet, id);
-            ++clients;
-        }
+        setTimeout (tweetClient, broadcastDelay, tweet, id);
+        ++clients;
     }
 
-    console.log('New tweet: ' + tweet.text);
+    console.log ('New tweet: ' + tweet.text);
     console.log ('Broadcast delay: ' + broadcastDelay);
     console.log ("Active clients: " + clients);
 };
@@ -99,7 +99,7 @@ function twitterAuth (credentials)
     var t = new nt(credentials);
 
     t.broadcast = broadcast;
-   return t;
+    return t;
 };
 
 module.exports = twitterAuth;
