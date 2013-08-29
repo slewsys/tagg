@@ -43,22 +43,29 @@ a {
         column-count: 3;
         display: box;
         border: 1px solid black;
+        border-radius: 5px;
         padding: 0em 2em 4em 0em;
-        width: 72em;
         height: 56em;
+        width: 140em;
     }
 
+    iframe {
+        height: 17em;
+        width: 33em;
+        seamless: seamless;
+    }
     .tweet {
         /* box-flex: 1; */
-        background-color: lightgrey;
-        width: 18em;
-        height: 12em;
-        margin: 2em 0em 2em 4em;
-        padding: 1em 1em 1em 1em;
-        border: 1px solid black;
+        /* backgrpound-color: lightgrey; */
+        height: 17em;
+        width: 33em;
+        margin: 2em 0em 2em 2em;
+        padding: 0em 0em 0em 0em;
+        /* border: 1px solid black; */
+        -webkit-box-shadow:5px 7px 0px 3px #000;
         border-radius: 5px;
-        box-sizing: border-box;
-        /* text-align: justify; */
+    /*     box-sizing: border-box; */
+    /*     /\* text-align: justify; *\/ */
         word-wrap: break-word;
     }
 }

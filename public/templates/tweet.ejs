@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link id="twitter-widget-css"
+          rel="stylesheet"
+          type="text/css"
+          href="/stylesheets/twitter-status-stylesheet.css">
+    <base target="_blank">
+    <style type="text/css">
+     body{display:none}
+    </style>
+  </head> 
+  <body>
+    <div class="root standalone-tweet ltr twitter-tweet not-touch"
+      dir="ltr"
+      data-dt-months="Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec"
+      data-dt-full="%{hours12}:%{minutes} %{amPm} - %{day} %{month} %{year}"
+      data-dt-am="AM"
+      data-dt-pm="PM"
+      id="twitter-widget-2"
+      lang="en"
+      data-twitter-event-id="0">
+      <blockquote class="tweet subject expanded h-entry"
+                  data-tweet-id="<%= tweet_id %>"
+                  cite="https://twitter.com/<%= screen_name + '/status/' + tweet_id %>">
+        <div class="header h-card p-author">
+          <a class="u-url profile"
+             href="https://twitter.com/<%= screen_name %>"
+             aria-label="<%= name + ' (screen name: ' +  screen_name %>)">
+            <img class="u-photo avatar"
+                 alt=""
+                 src="<%= profile_image_url %>"
+            <span class="full-name">
+              <span class="p-name customisable-highlight">
+                <%= name %>
+              </span>
+            </span>
+            <span class="p-nickname"
+                  dir="ltr">
+              @<b><%= screen_name %></b>
+            </span>
+          </a>
+        </div>
+        <iframe allowtransparency="true"
+                frameborder="0"
+                scrolling="no"
+                src="https://platform.twitter.com/widgets/follow_button.1375828408.html#_=1376730058283&amp;id=twitter-widget-3&amp;lang=<%= lang %>&amp;partner=undefined&amp;screen_name=<%= screen_name %>&amp;show_count=false&amp;show_screen_name=false&amp;size=m"
+                class="twitter-follow-button twitter-follow-button"
+                style="width: 60px; height: 20px;"
+                title="Twitter Follow Button"
+                data-twttr-rendered="true">
+        </iframe>
+
+        <div class="e-entry-content">
+          <p class="e-entry-title">
+            <%= text %>
+          </p>
+
+          <div class="dateline">
+            <a class="u-url customisable-highlight long-permalink"
+               href="https://twitter.com/<%= screen_name + '/statuses/' + tweet_id %>"
+               data-datetime="<%= created_at %>">
+              <time pubdate=""
+                    class="dt-updated"
+                    datetime="<%= created_at %>"
+                    title="Time posted: <%= created_at %>">
+                <%= created_at %>
+              </time>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer customisable-border">
+          <span class="stats-narrow customisable-border">
+            <span class="stats">
+              <span class="stats-retweets">
+                <strong><%= retweet_count %></strong> Retweets
+              </span>
+              <span class="stats-favorites">
+                <strong><%= favorite_count %></strong> favorites
+              </span>
+            </span>
+          </span>
+
+          <ul class="tweet-actions">
+            <li>
+              <a href="https://twitter.com/intent/tweet?in_reply_to=<%= tweet_id %>"
+                 class="reply-action web-intent"
+                 title="Reply">
+                <b>Reply</b>
+              </a>
+            </li>
+
+            <li>
+              <a href="https://twitter.com/intent/retweet?tweet_id=<%= tweet_id %>"
+                 class="retweet-action web-intent"
+                 title="Retweet">
+                <b>Retweet</b>
+              </a>
+            </li>
+
+            <li>
+              <a href="https://twitter.com/intent/favorite?tweet_id=<%= tweet_id %>"
+                 class="favorite-action web-intent"
+                 title="Favorite">
+                <b>Favorite</b>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </blockquote>
+    </div>
+  </body>
+</html>

@@ -13,7 +13,7 @@ var express           = require ('express'),
     http              = require ('http'),
     sockio            = require ('socket.io'),
     routes            = require ('./routes'),
-    tweets            = require ('./routes/tweets'),
+    tagg              = require ('./routes/tagg'),
     user              = require ('./routes/user'),
     path              = require ('path');
 
@@ -23,7 +23,7 @@ var app               = express (),
 
 var twitterAuth       = require ('./models/twitterAuth'),
     credentials       = require ('./private/twitter-key.json'),
-    authTwitterStream = twitterAuth (credentials),
+    authStreamClient  = twitterAuth (credentials),
     streamFilter      =
         {
             'track' : 'cnnbrk'
@@ -32,7 +32,7 @@ var twitterAuth       = require ('./models/twitterAuth'),
 // all environments
 app.set ('port', process.env.PORT || 8000);
 app.set ('views', __dirname + '/views');
-app.set ('view engine', 'jade');
+app.set ('view engine', 'ejs');
 
 app.use (express.favicon ());
 app.use (express.logger ('dev'));
@@ -50,7 +50,7 @@ if  ('development' == app.get ('env'))
 }
 
 app.get ('/', routes.index);
-app.get ('/tagg-stream', tweets.tagg);
+app.get ('/tagg-stream', tagg.stream);
 app.get ('/users', user.list);
 
 function serverAck ()
@@ -63,7 +63,7 @@ function addStreamClient (clientSocket)
     console.log ('socket ID: ' + clientSocket['id']);
     console.log ('disconnected: ' + clientSocket['disconnected']);
 
-    authTwitterStream.broadcast (streamFilter, clientSocket);
+    authStreamClient.broadcast (streamFilter, clientSocket);
 }
 
 server.listen (app.get ('port'), serverAck);

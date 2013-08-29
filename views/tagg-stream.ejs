@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/javascripts/jquery-2.0.4-pre.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/client.js"></script>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <small><%= subtitle %></small>
+    <div class="container">
+      <% for (i = 0; i < streamData.length; ++i) { %>
+      <div class="tweet">
+        <iframe src="/tweets/<%= streamData[i]['id_str'] + '.html' %>">
+        </iframe>
+      </div>
+      <% } %>
+    </div>
+    <p id="last-modified"></p>
+  </body>
+</html>

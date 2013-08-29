@@ -7,18 +7,20 @@ $(function()
       // Establish socket.io connection with server.
       var serverSocket = io.connect(document.location.origin);
 
-      function tweetHandler (data)
-      {
-          var tweet = '\n' + data.text + '\n';
 
-          // console.log(data);
+      function tweetHandler (tweetURI)
+      {
+          // console.log(tweetURI);
+          var html = '<div class="tweet">';
+          html += '<iframe class="frame" src="' + tweetURI + '">';
+          html += '</frame></div>';
           
           // If more than streamLengthMax elements, remove first.
           if ($('.tweet').size() >= 10)
               $('.tweet').first().remove();
 
-          // Append new element to end.
-          $('<div class="tweet">' + tweet + '</div>').appendTo('.container');
+          // Append new iframe to end.
+          $(html).appendTo('.container');
 
           $('p#last-modified').text('Updated ' + new Date().toString());
       };

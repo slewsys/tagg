@@ -10,9 +10,12 @@
  *     to client.
  */
 
-var oauth                = require ('oauth'),
-    util                 = require ('util'),
-    through              = require ('through');
+var ejs                  = require ('ejs'),
+    fs                   = require ('fs'),
+    oauth                = require ('oauth'),
+    path                 = require ('path'),
+    through              = require ('through'),
+    util                 = require ('util');
 
 // Module vars
 var clientList = [],
@@ -33,25 +36,107 @@ var clientList = [],
             'language',
             'locations',
             'stall_warnings',
-            'track',
+            'track'
         ]
     };
 
-function tweetClient (tweet, id)
+function tweetClient (tweetURI, id)
 {
     if (clientList[id]['disconnected'])
         delete clientList[id];
     else
-        clientList[id].emit('solo', tweet);
+        clientList[id].emit('solo', tweetURI);
+}
+    
+function broadcastTweet (tweetURI)
+{    
+    var broadcastDelay;
+    var currentTime = new Date ();
+    var clients = 0;
+
+    // Throttle transmission to 1 second per tweet (per client).
+    if (currentTime - lastBroadcastTime < 1000)
+        lastBroadcastTime.setSeconds(lastBroadcastTime.getSeconds() + 1);
+    else
+        lastBroadcastTime = currentTime;
+    broadcastDelay = lastBroadcastTime - currentTime;
+
+    // Broadcast to clientList.
+    for (var id in clientList)
+    {
+        setTimeout (tweetClient, broadcastDelay, tweetURI, id);
+        ++clients;
+    }
+
+    console.log ('Broadcast delay: ' + broadcastDelay);
+    console.log ("Active clients: " + clients);
 }
 
-function broadcastTweet (data)
+function tweetPaths (tweet)
 {
-    var clients = 0;
-    var currentTime = new Date ();
-    var broadcastDelay;
+    var src =
+            {
+                template : './public/templates/tweet.ejs',
+                pathname : './public/tweets/' + tweet['id_str'] + '.html',
+                uri      : '/tweets/'  + tweet['id_str'] + '.html'
+            };
+    return src;
+}
+
+function processTweet (tweet)
+{
+    var readOptions =
+            {
+                flag     : 'r',
+                encoding : 'utf8'
+            };
+    var tweetSrc = tweetPaths (tweet);
+
+    function publish (error)
+    {
+        if (error)
+        {
+            console.log ('Write error: ' + tweetSrc.pathname);
+            throw error;
+        }
+        console.log ('tweet URI: ' + tweetSrc.uri);
+        broadcastTweet (tweetSrc.uri);
+    }
+
+    function renderTemplate (error, contents)
+    {
+        var formattedTweet;
+        var tweetData =
+                {
+                    id                : tweet['user']['id'],
+                    name              : tweet['user']['name'],
+                    profile_image_url : tweet['user']['profile_image_url_https'],
+                    screen_name       : tweet['user']['screen_name'],
+                    text              : tweet['text'],
+                    created_at        : tweet['created_at'],
+                    favorite_count    : tweet['favorite_count'],
+                    retweet_count     : tweet['retweet_count'],
+                    tweet_id          : tweet['id'],
+                    lang              : tweet['lang']
+                };
+
+        if (error)
+        {
+            console.log ('Read error: ' + tweetSrc.template);
+            throw error;
+        }
+        formattedTweet = ejs.render (contents, tweetData);
+        fs.writeFile (tweetSrc.pathname, formattedTweet, publish);
+    }
+
+    // Read template and call applyTemplate ().
+    fs.readFile (tweetSrc.template, readOptions, renderTemplate);
+}
+
+function parseStream (data)
+{
     var tweet;
-    
+
     // Filter '\r\n' from stream.
     if (data.length == 2)
     {
@@ -76,36 +161,26 @@ function broadcastTweet (data)
         return;
 
     // Ignore if text in streamData[].
-    for (var i = 0; i < streamData.length; ++i)
-        if (tweet.text === streamData[i].text)
+    for (var i = streamData.length - 1; i >= 0; --i)
+        if (streamData[i].text === tweet.text)
             return;
 
     // Push unique tweet onto global streamData[].
     if (streamData.length >= streamLengthMax)
-        streamData.shift();
-    streamData.push(tweet);
-
-    // Throttle transmission to 1 second per tweet (per client).
-    if (currentTime - lastBroadcastTime < 1000)
-        lastBroadcastTime.setSeconds(lastBroadcastTime.getSeconds() + 1);
-    else
-        lastBroadcastTime = currentTime;
-    broadcastDelay = lastBroadcastTime - currentTime;
-
-    // Broadcast to clientList.
-    for (var id in clientList)
     {
-        setTimeout (tweetClient, broadcastDelay, tweet, id);
-        ++clients;
-    }
+        var expiredTweet = streamData.shift();
+        var tweetSrc = tweetPaths (expiredTweet);
 
-    console.log ('Broadcast delay: ' + broadcastDelay);
-    console.log ("Active clients: " + clients);
-};
+        fs.unlink (tweetSrc.pathname);
+    }
+    streamData.push (tweet);
+
+    processTweet (tweet);
+}
 
 function streamRelay (response)
 {
-    response.pipe (through (broadcastTweet));
+    response.pipe (through (parseStream));
 }
 
 function broadcast (streamParams, clientSocket)
