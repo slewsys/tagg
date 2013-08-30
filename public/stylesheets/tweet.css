@@ -8,7 +8,7 @@ html,body,h1,h2,h3,blockquote,p,ol,ul,li,img,iframe,button {
     text-transform:none;
     /* vertical-align:baseline; */
     list-style:none;
-    /* border:0; */
+    border:0;
     -webkit-outline:0;
     -moz-outline:0;
     -ms-outline:0;
@@ -20,8 +20,8 @@ html body {
     background:transparent
 }
 #twitter-widget-2 {
-    /* border: 1px solid lightgray; */
-    width: 37em;
+    border: 1px solid lightgray;
+    width: 43em;
     height: 19em;
 }
 .header .avatar {
@@ -42,10 +42,17 @@ html body {
 .e-entry-content .e-entry-title {
     position: relative;
     top: -1em;
-    left: -48px;
+    /* left: -48px; */
     /* border: 1px solid black; */
     height: 6em;
     width: 30em;
+}
+.tweet .e-entry-title {
+    margin:0 5px 0 0;
+    overflow:hidden;
+    clear:both;
+    word-wrap:break-word;
+    white-space:pre-wrap
 }
 .standalone-tweet .subject .dateline {
     margin-top: 0px;
@@ -53,10 +60,10 @@ html body {
 .standalone-tweet {
     padding:8px 8px 0;
     background:#fff;
-    border-radius:5px
+    /* border-radius:5px */
 }
 .standalone-tweet .subject {
-    margin-top:4px
+    /* margin-top:4px */
 }
 .standalone-tweet .subject {
     padding:4px 8px 8px;
@@ -512,13 +519,6 @@ a.tweet-box-button {
 }
 .p-author .profile .p-name,.cards-base .profile .p-name {
     font-weight:bold
-}
-.tweet .e-entry-title {
-    margin:0 5px 0 0;
-    overflow:hidden;
-    clear:both;
-    word-wrap:break-word;
-    white-space:pre-wrap
 }
 .inline-media {
     max-width:100%;

@@ -38,11 +38,14 @@ var clientList = [],
             'stall_warnings',
             'track'
         ]
-    };
+    },
+    unlinkDelay = 10000;
 
 function tweetClient (tweetURI, id)
 {
-    if (clientList[id]['disconnected'])
+    if (clientList[id] === undefined)
+        return;
+    else if (clientList[id]['disconnected'])
         delete clientList[id];
     else
         clientList[id].emit('solo', tweetURI);
@@ -171,7 +174,8 @@ function parseStream (data)
         var expiredTweet = streamData.shift();
         var tweetSrc = tweetPaths (expiredTweet);
 
-        fs.unlink (tweetSrc.pathname);
+        // Delay unlinking of expired tweet to avoid race with browser
+        setTimeout (fs.unlink, unlinkDelay, tweetSrc.pathname);
     }
     streamData.push (tweet);
 
