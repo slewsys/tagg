@@ -2,7 +2,6 @@
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait)
 {
     .e-entry-content .e-entry-title {
-        /* border: 1px solid lightgray; */
         font:normal normal normal 14px/18px "Helvetica Neue",Arial,sans-serif!important;
     }
     .twitter-follow-button {
@@ -11,8 +10,6 @@
         right:90px!important;
     }
     #twitter-widget-2 {
-        /* border: 1px solid lightgray; */
-        /* width: 40em!important; */
         height: 18em;
         font:normal normal normal 10px/14px "Helvetica Neue",Arial,sans-serif;
     }
@@ -22,7 +19,6 @@
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape)
 {
     .e-entry-content .e-entry-title {
-        /* border: 1px solid lightgray; */
         font:normal normal normal 14px/18px "Helvetica Neue",Arial,sans-serif!important;
     }
     .twitter-follow-button {
@@ -31,12 +27,11 @@
         right:90px!important;
     }
     #twitter-widget-2 {
-        /* border: 1px solid lightgray; */
-        /* width: 40em!important; */
         height: 18em;
         font:normal normal normal 10px/14px "Helvetica Neue",Arial,sans-serif;
     }
 }
+
 html,body,h1,h2,h3,blockquote,p,ol,ul,li,img,iframe,button {
     padding:0;
     margin:0;
@@ -45,7 +40,6 @@ html,body,h1,h2,h3,blockquote,p,ol,ul,li,img,iframe,button {
     -webkit-text-size-adjust:100%;
     -ms-text-size-adjust:100%;
     text-transform:none;
-    /* vertical-align:baseline; */
     list-style:none;
     border:0;
     -webkit-outline:0;
@@ -54,26 +48,61 @@ html,body,h1,h2,h3,blockquote,p,ol,ul,li,img,iframe,button {
     -o-outline:0;
     outline:0
 }
-
 html body {
     display:block;
     background:transparent
 }
-
 #twitter-widget-2 {
-    /* border: 1px solid lightgray; */
     width: 42em;
     height: 18em;
 }
-
 .header .avatar {
     position:absolute;
     top:0;
-    /* left:-57px; */
     width:48px;
     height:48px;
     background:#fff;
     border-radius:4px
+}
+.tweet-actions {
+    display:block;
+    position:absolute;
+    border-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    width: 66px;
+    height: 22px;
+    background-color: red;
+}
+li:nth-child(1) a {
+    visibility: hidden;
+}
+li:nth-child(1)  {
+    width: 20px;
+    height: 20px;
+    border-sizing: border-box;
+    border: 1px solid lightgray;
+    background: url("/images/sprites.png") 4px 2px;
+}
+li:nth-child(2) a {
+    visibility: hidden;
+}
+li:nth-child(2)  {
+    width: 20px;
+    height: 20px;
+    border-sizing: border-box;
+    border: 1px solid lightgray;
+    background: url("/images/sprites.png") -16px 2px;
+}
+li:nth-child(3) a {
+    visibility: hidden;
+}
+li:nth-child(3)  {
+    width: 20px;
+    height: 20px;
+    border-sizing: border-box;
+    border: 1px solid lightgray;
+    background: url("/images/sprites.png") -34px 2px;
 }
 .standalone-tweet .subject .header .profile .p-name {
     font-size:16px
@@ -84,21 +113,17 @@ html body {
 .e-entry-content .e-entry-title {
     position: relative;
     top: -1em;
-    /* left: -48px; */
-    /* border: 1px solid black; */
     height: 6em;
     width: 30em;
 }
 .tweet .e-entry-title {
     margin:0 5px 0 0;
     overflow:hidden;
-    /* border: 1px solid black; */
     clear:both;
     word-wrap:break-word;
     white-space:pre-wrap
 }
 .standalone-tweet .subject .dateline {
-    /* border: 1px solid black; */
     margin-top: -1em;
     padding-bottom: 5px;
 }

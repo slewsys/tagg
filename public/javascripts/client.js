@@ -1,12 +1,11 @@
 /*
- * client.js: Connect to push server, appending tweets
- * to end of list and removing top-most when total exceeds a maximum.
+ * client.js: Connect to push server, append tweets
+ * and remove top-most to maintain fixed number (streamLengthMax).
  */
 $(function()
   {
       // Establish socket.io connection with server.
       var serverSocket = io.connect(document.location.origin);
-
 
       function tweetHandler (tweetURI)
       {
@@ -28,4 +27,5 @@ $(function()
       serverSocket.on('solo', tweetHandler);
 
       console.log('Receiving from: ' +  document.location.origin);
-  });
+  }
+ );

@@ -7,7 +7,7 @@ exports.index = function(req, res)
 {
   res.render('index',
              {
-                 title: 'Twitter Aggregator',
+                 title: 'Responsive Twitter Aggregator',
                  handles: [ '@cnnbrk' ]
              }
             );
