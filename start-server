@@ -1,0 +1,32 @@
+#! /bin/bash
+#
+# @(#) start-server
+#
+# This script starts the Twitter Aggregator app.
+#
+pgm=${0##*/}
+
+# Set PREFIX appropriate to your system!
+PREFIX='/opt'
+BINPREFIX="${PREFIX}/bin"
+LIBPREFIX="${PREFIX}/lib/node_modules"
+NODE="$BINPREFIX/node"
+
+# Set NODE_PATH appropriate to your system!
+: ${NODE_PATH:="$LIBPREFIX:$LIBPREFIX/tagg/node_modules"}
+export NODE_PATH
+
+
+if test ! -x "$NODE"; then
+    NODE=$(which node)
+    if test ! -x "$NODE"; then
+        echo "$pgm: Cannot locate node executable"
+        exit 1
+    fi
+fi
+
+# Clean out prior tweets directory.
+find ./public/tweets/ -type f -name '*.html' -maxdepth 1 -delete
+
+# Run Twitter Aggregator
+env NODE_ENV=development $NODE ./app.js
