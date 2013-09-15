@@ -115,7 +115,7 @@ function processTweet (tweet)
                     name              : tweet['user']['name'],
                     profile_image_url : tweet['user']['profile_image_url_https'],
                     screen_name       : tweet['user']['screen_name'],
-                    text              : tweet['text'],
+                    text              : tweet['text'].split(/\s\s/).join('\n'),
                     created_at        : tweet['created_at'],
                     favorite_count    : tweet['favorite_count'],
                     retweet_count     : tweet['retweet_count'],
