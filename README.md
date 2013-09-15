@@ -3,7 +3,7 @@ Responsive Twitter Aggregator
 
 Express/Node app displays Twitter stream with "repsonsive" styling.
 Twitter 1.1 API and OAuth 1.0 stream request is piped to clients via
-Node's Stream API and Socket.io library.
+Node's Stream API and Socket.IO library.
 
 Client Access
 -------------
