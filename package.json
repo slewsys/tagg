@@ -1,15 +1,15 @@
 {
   "name": "tagg",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "private": true,
   "scripts": {
     "start": "./start.server"
   },
   "dependencies": {
-    "express": "3.3.5",
-    "ejs": "0.8.4",
-    "through": "2.3.4",
-    "oauth": "0.9.10",
-    "socket.io": "0.9.16"
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "oauth": "0.9.15",
+    "socket.io": "^4.0.2",
+    "through": "^2.3.8"
   }
 }
